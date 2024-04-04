@@ -18,7 +18,10 @@ const main = async () => {
           })
         ) {
           await db.insert(filesSchema).values({
-            fileName: path.split('\\').pop()!,
+            fileName:
+              process.platform === 'linux'
+                ? path.split('/').pop()!
+                : path.split('\\').pop()!,
             fileSize: fileDetails.size,
             isFile: fileDetails.isFile(),
             modifyTimestamp: fileDetails.mtime,
