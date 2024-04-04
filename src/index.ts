@@ -1,22 +1,29 @@
 #!/usr/bin/env node
-// NOTE: You can remove the first line if you don't plan to release an
-// executable package. E.g. code that can be used as cli like prettier or eslint
+import * as chokidar from 'chokidar';
+import { statSync } from 'fs';
 
 const main = () => {
-  console.log("hello Node.js and Typescript world :]");
+  console.log('hello Node.js and Tyescript world :]');
+
+  chokidar.watch('./watcher').on('all', (event, path) => {
+    const fileDetails = statSync(path);
+    console.log(fileDetails);
+    switch (event) {
+      case 'add':
+        break;
+      case 'addDir':
+        break;
+      case 'change':
+        break;
+      case 'unlink':
+        break;
+      case 'unlinkDir':
+        break;
+      default:
+        break;
+    }
+    console.log(event, path);
+  });
 };
-
-// This was just here to force a linting error for now to demonstrate/test the
-// eslint pipeline. You can uncomment this and run "yarn check-lint" to test the
-// linting.
-// const x: number[] = [1, 2];
-// const y: Array<number> = [3, 4];
-
-// This was just here to force a linting error for now to demonstrate/test the
-// eslint pipeline. You can uncomment this and run "yarn check-lint" to test the
-// linting.
-// if (x == y) {
-//   console.log("equal!");
-// }
 
 main();
