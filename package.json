@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
+  "type":"module",
   "bin": {
     "nodejs-typescript-modern-starter": "dist/src/index.js",
     "ntms": "dist/src/index.js"
@@ -46,6 +47,7 @@
     "@types/nodemon": "1.19.6",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
+    "drizzle-kit": "^0.20.14",
     "esbuild": "0.19.12",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -58,6 +60,9 @@
   },
   "packageManager": "yarn@4.0.2",
   "dependencies": {
-    "chokidar": "^3.6.0"
+    "chokidar": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.7",
+    "mysql2": "^3.9.3"
   }
 }
