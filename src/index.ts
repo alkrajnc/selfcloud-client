@@ -3,20 +3,28 @@ import * as chokidar from 'chokidar';
 import { statSync } from 'fs';
 import db from './db.js';
 import { files as filesSchema } from './db/schema.js';
+import { linuxSyncer } from './syncer.js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const main = async () => {
   const files = await db.select().from(filesSchema);
 
-  chokidar.watch('./watcher').on('all', async (event, path) => {
+  chokidar.watch('/home/dev/selfcloud').on('all', async (event, path) => {
     const fileDetails = statSync(path);
-    console.log(fileDetails);
     switch (event) {
       case 'add':
         if (
           !files.find((file) => {
-            return file.fileName === path.split('\\').pop()!;
+            return (
+              file.fileName ===
+              (process.platform === 'linux'
+                ? path.split('/').pop()!
+                : path.split('\\').pop()!)
+            );
           })
         ) {
+          linuxSyncer(dirname(new URL(path, __filename).toString()), ['avrzP']);
           await db.insert(filesSchema).values({
             fileName:
               process.platform === 'linux'
